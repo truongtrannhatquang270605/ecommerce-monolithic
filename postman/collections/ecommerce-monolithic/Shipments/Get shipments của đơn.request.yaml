@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/shipments/order/{{orderId}}"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{customerToken}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r
+
+      pm.test(\"Status là SHIPPING\", () => pm.expect(pm.response.json()[0].status).to.eql(\"SHIPPING\"));"
+    language: text/javascript
+order: 5000

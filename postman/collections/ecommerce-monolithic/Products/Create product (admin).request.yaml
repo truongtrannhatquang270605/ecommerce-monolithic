@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/products"
+method: POST
+body:
+  type: json
+  content: '{ "pname": "Mũ lưỡi trai", "price": 99000, "quantity": 20 }'
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status 201\", () => pm.response.to.have.status(201));\r
+
+      pm.test(\"Tên tiếng Việt đúng dấu\", () => pm.expect(pm.response.json().pname).to.eql(\"Mũ lưỡi trai\"));\r
+
+      pm.collectionVariables.set(\"productId\", pm.response.json().pid);"
+    language: text/javascript
+order: 2000

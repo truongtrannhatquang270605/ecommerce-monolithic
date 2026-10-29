@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/orders"
+method: POST
+body:
+  type: json
+  content: '{ "items": [ { "pid": 1, "qty": 2 } ] }'
+auth:
+  type: bearer
+  credentials:
+    token: "{{customerToken}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status 201\", () => pm.response.to.have.status(201));\r
+
+      pm.test(\"Có tổng tiền\", () => pm.expect(pm.response.json().total).to.be.above(0));\r
+
+      pm.collectionVariables.set(\"orderId\", pm.response.json().oid);"
+    language: text/javascript
+order: 1000

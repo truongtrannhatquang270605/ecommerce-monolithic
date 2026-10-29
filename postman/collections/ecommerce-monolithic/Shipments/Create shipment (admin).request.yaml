@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/shipments"
+method: POST
+body:
+  type: json
+  content: '{ "oid": {{orderId}} }'
+auth:
+  type: bearer
+  credentials:
+    token: "{{adminToken}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status 201\", () => pm.response.to.have.status(201));\r
+
+      pm.collectionVariables.set(\"shipmentId\", pm.response.json().shipid);"
+    language: text/javascript
+order: 1000

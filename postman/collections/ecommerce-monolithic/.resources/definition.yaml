@@ -1,0 +1,9 @@
+$kind: collection
+variables:
+  baseUrl: ""
+  adminToken: ""
+  customerToken: ""
+  customerUsername: ""
+  productId: ""
+  orderId: ""
+  shipmentId: ""

@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/me"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{customerToken}}"
+scripts:
+  - type: afterResponse
+    code: "pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r
+
+      pm.test(\"Role là customer\", () => pm.expect(pm.response.json().role.rolename).to.eql(\"customer\"));"
+    language: text/javascript
+order: 6000

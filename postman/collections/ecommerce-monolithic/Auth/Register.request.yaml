@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/auth/register"
+method: POST
+body:
+  type: json
+  content: '{ "username": "{{customerUsername}}", "fullname": "Nhat Quang", "password": "123456" }'
+scripts:
+  - type: beforeRequest
+    code: pm.collectionVariables.set("customerUsername", "user" + Date.now());
+    language: text/javascript
+  - type: afterResponse
+    code: pm.test("Status 201", () => pm.response.to.have.status(201));
+    language: text/javascript
+order: 1000
