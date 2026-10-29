@@ -90,7 +90,6 @@ router.post('/', async (req, res) => {
                         unit_price: productMap.get(item.pid).price,
                     })),
                 },
-                shipments: { create: { status: 'PENDING' } },
             },
             include: orderInclude,
         });
