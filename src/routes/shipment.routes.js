@@ -52,4 +52,13 @@ router.put('/:id', requireRole('admin'), async (req, res) => {
     res.json(shipment);
 });
 
+// Danh sách vận chuyển: admin thấy tất cả, customer chỉ thấy của đơn mình
+router.get('/', async (req, res) => {
+    const where = req.user.role === 'admin' ? {} : { order: { uid: req.user.uid } };
+    const shipments = await prisma.shipment.findMany({
+        where,
+        orderBy: { shipid: 'asc' },
+    });
+    res.json(shipments);
+});
 module.exports = router;
