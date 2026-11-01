@@ -33,7 +33,8 @@ router.post('/register', async (req, res) => {
             roleid: role.roleid,
             mid: membership.mid,
         },
-        select: { uid: true, username: true, fullname: true },
+        select: { uid: true, username: true, fullname: true }, role: { select: { rolename: true } },
+        membership: { select: { mname: true } },
     });
 
     res.status(201).json(user);
